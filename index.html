@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Report Child Abuse &amp; Sexual Violence Perpetrators — Bangladesh</title>
+<meta name="description" content="A public platform to report and view verified cases of child abuse and sexual violence perpetrators in Bangladesh. All submissions reviewed by NGO partners." />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Georgia', serif; background: #fff; color: #000; font-size: 15px; line-height: 1.6; }
+
+  /* NAV */
+  nav {
+    border-bottom: 1px solid #000;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 100;
+  }
+  nav .brand { font-size: 13px; font-weight: bold; letter-spacing: 0.04em; text-transform: uppercase; }
+  nav .nav-tabs { display: flex; }
+  nav .nav-tab {
+    padding: 0 1.2rem;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: #000;
+    border-left: 1px solid #000;
+    font-family: inherit;
+    transition: background 0.15s;
+  }
+  nav .nav-tab:hover { background: #f5f5f5; }
+  nav .nav-tab.active { background: #000; color: #fff; }
+
+  /* PAGES */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* HERO */
+  .hero { border-bottom: 1px solid #000; padding: 3rem 2rem; }
+  .hero h1 { font-size: 26px; font-weight: normal; line-height: 1.35; max-width: 640px; margin-bottom: 0.75rem; }
+  .hero p { font-size: 14px; color: #444; max-width: 560px; line-height: 1.75; }
+
+  /* FORM */
+  .form-wrap { max-width: 720px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }
+  .section-title {
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-bottom: 1px solid #000;
+    padding-bottom: 6px;
+    margin: 2.5rem 0 1.25rem;
+    color: #000;
+  }
+  .field { margin-bottom: 1.25rem; }
+  label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; }
+  label .opt { font-weight: normal; color: #777; font-size: 12px; }
+  .req { color: #000; }
+  input[type=text],
+  input[type=email],
+  input[type=date],
+  textarea,
+  select {
+    width: 100%;
+    border: 1px solid #000;
+    padding: 8px 10px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #fff;
+    color: #000;
+    border-radius: 0;
+    outline: none;
+    transition: background 0.1s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  input:focus, textarea:focus, select:focus { background: #f9f9f9; }
+  textarea { resize: vertical; min-height: 80px; }
+
+  .radio-group, .check-group { display: flex; flex-direction: column; gap: 7px; margin-top: 6px; }
+  .radio-group label, .check-group label {
+    font-weight: normal;
+    font-size: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    cursor: pointer;
+    line-height: 1.4;
+  }
+  .radio-group input[type=radio],
+  .check-group input[type=checkbox] {
+    width: auto;
+    min-width: 14px;
+    margin: 0;
+    margin-top: 2px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .inline-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .help { font-size: 12px; color: #777; margin-top: 5px; line-height: 1.5; }
+
+  .consent-box { border: 1px solid #000; padding: 1rem 1.1rem; margin-bottom: 1rem; }
+  .consent-box label {
+    font-size: 13px;
+    font-weight: normal;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    cursor: pointer;
+    line-height: 1.6;
+  }
+  .consent-box input[type=checkbox] {
+    width: auto;
+    min-width: 14px;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 13px;
+    background: #000;
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    font-family: inherit;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: background 0.15s;
+    text-transform: uppercase;
+  }
+  .btn-submit:hover { background: #222; }
+
+  .error-msg {
+    background: #fff;
+    border: 1px solid #000;
+    padding: 0.75rem 1rem;
+    font-size: 13px;
+    margin-bottom: 1rem;
+    display: none;
+  }
+
+  .success-msg {
+    border: 1px solid #000;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    margin: 3rem 0;
+  }
+  .success-msg h3 { font-size: 20px; margin-bottom: 0.6rem; font-weight: normal; }
+  .success-msg p { font-size: 13px; color: #555; line-height: 1.7; }
+
+  /* DATABASE */
+  .db-wrap { max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 4rem; }
+
+  .db-stats { display: flex; gap: 2.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+  .stat-item { display: flex; flex-direction: column; }
+  .stat-num { font-size: 32px; font-weight: bold; line-height: 1; }
+  .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: #666; margin-top: 3px; }
+
+  .tier-legend { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .tier-pill {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border: 1px solid #000;
+    font-weight: bold;
+    font-family: sans-serif;
+  }
+  .tier-pill.green { background: #000; color: #fff; }
+  .tier-pill.yellow { background: #fff; color: #000; }
+  .verified-note { font-size: 11px; color: #777; font-style: italic; }
+
+  .db-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #ddd;
+    align-items: flex-end;
+  }
+  .filter-group { display: flex; flex-direction: column; gap: 4px; }
+  .filter-group label { font-size: 11px; font-weight: bold; letter-spacing: 0.06em; text-transform: uppercase; }
+  .filter-group select, .filter-group input[type=text] {
+    border: 1px solid #000;
+    padding: 7px 10px;
+    font-size: 13px;
+    font-family: inherit;
+    background: #fff;
+    border-radius: 0;
+    width: 180px;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .cases-list { border-top: 1px solid #000; }
+  .case-card {
+    border-bottom: 1px solid #ddd;
+    padding: 1.25rem 0;
+    display: grid;
+    grid-template-columns: 14px 1fr auto;
+    gap: 1rem;
+    align-items: start;
+    transition: padding 0.1s;
+  }
+  .case-card:hover { background: #fafafa; padding-left: 0.5rem; padding-right: 0.5rem; }
+  .case-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .case-dot.green { background: #000; }
+  .case-dot.yellow { background: #bbb; border: 1px solid #999; }
+
+  .case-name { font-size: 16px; font-weight: bold; margin-bottom: 4px; }
+  .case-meta {
+    font-size: 12px;
+    color: #666;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin-bottom: 7px;
+  }
+  .case-meta span { margin-right: 0; }
+  .case-meta span + span::before { content: ' · '; }
+  .case-desc { font-size: 13px; color: #333; line-height: 1.55; }
+  .case-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+  .tag {
+    font-size: 11px;
+    border: 1px solid #ccc;
+    padding: 2px 8px;
+    letter-spacing: 0.02em;
+    font-family: sans-serif;
+  }
+  .tag.crime { border-color: #000; }
+
+  .case-status { text-align: right; flex-shrink: 0; }
+  .status-badge {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 3px 9px;
+    border: 1px solid;
+    font-family: sans-serif;
+    white-space: nowrap;
+  }
+  .status-convicted { background: #000; color: #fff; border-color: #000; }
+  .status-arrested { color: #444; border-color: #444; }
+  .status-charged { color: #777; border-color: #777; }
+  .status-accused { color: #aaa; border-color: #aaa; }
+  .status-absconded { color: #000; border-color: #000; background: #f0f0f0; }
+
+  .no-results { padding: 3rem 0; text-align: center; font-size: 14px; color: #888; border-top: 1px solid #000; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid #000;
+    padding: 1.5rem 2rem;
+    font-size: 12px;
+    color: #777;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  @media (max-width: 640px) {
+    .inline-row { grid-template-columns: 1fr; }
+    .case-card { grid-template-columns: 14px 1fr; }
+    .case-status { display: none; }
+    nav .brand { font-size: 11px; max-width: 130px; }
+    nav .nav-tab { padding: 0 0.8rem; font-size: 12px; }
+    .db-stats { gap: 1.5rem; }
+    .filter-group select, .filter-group input[type=text] { width: 140px; }
+    .hero { padding: 2rem 1rem; }
+    .form-wrap, .db-wrap { padding-left: 1rem; padding-right: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">Report Abuse BD</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('submit', this)">Submit a Case</button>
+    <button class="nav-tab" onclick="showPage('database', this)">Public Database</button>
+  </div>
+</nav>
+
+<!-- ===================== SUBMIT PAGE ===================== -->
+<div class="page active" id="page-submit">
+  <div class="hero">
+    <h1>Report Child Abuse &amp; Sexual Violence Perpetrators</h1>
+    <p>This form collects verified information about perpetrators of child sexual abuse, rape, and molestation in Bangladesh. All submissions are reviewed by NGO partners before publication. Provide evidence and sources to ensure accuracy.</p>
+  </div>
+
+  <div class="form-wrap">
+    <div id="error-banner" class="error-msg"></div>
+    <div id="form-area">
+
+      <div class="section-title">Section 1 — Victim Information</div>
+
+      <div class="field">
+        <label>Victim Age at Time of Incident <span class="req">*</span></label>
+        <select id="v-age">
+          <option value="">Select age range</option>
+          <option>Under 5 years</option>
+          <option>5–10 years</option>
+          <option>11–15 years</option>
+          <option>16–17 years</option>
+          <option>18+ years</option>
+          <option>Unknown</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Victim Gender <span class="req">*</span></label>
+        <select id="v-gender">
+          <option value="">Select</option>
+          <option>Female</option>
+          <option>Male</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="section-title">Section 2 — Perpetrator Details</div>
+
+      <div class="field">
+        <label>Full Name of Accused / Convicted Person <span class="req">*</span></label>
+        <input type="text" placeholder="Full legal name if available" id="p-name" />
+      </div>
+
+      <div class="inline-row">
+        <div class="field">
+          <label>Age of Perpetrator <span class="opt">— optional</span></label>
+          <input type="text" placeholder="e.g. 35 or 30–40" id="p-age" />
+        </div>
+        <div class="field">
+          <label>Occupation / Profession <span class="opt">— optional</span></label>
+          <input type="text" placeholder="What do/did they do?" id="p-occ" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Associated Business / Organization <span class="opt">— optional</span></label>
+        <input type="text" placeholder="Company, institution, organization" id="p-org" />
+      </div>
+
+      <div class="field">
+        <label>Family / Political Connections <span class="opt">— optional</span></label>
+        <textarea placeholder="Family background, social status, political connections if relevant" id="p-family"></textarea>
+      </div>
+
+      <div class="section-title">Section 3 — Crime Details</div>
+
+      <div class="field">
+        <label>Type of Crime <span class="req">*</span> <span class="opt">(select all that apply)</span></label>
+        <div class="check-group" id="crime-checks">
+          <label><input type="checkbox" value="Child sexual abuse"> Child sexual abuse</label>
+          <label><input type="checkbox" value="Rape"> Rape</label>
+          <label><input type="checkbox" value="Gang rape"> Gang rape</label>
+          <label><input type="checkbox" value="Attempted rape"> Attempted rape</label>
+          <label><input type="checkbox" value="Sexual molestation"> Sexual molestation</label>
+          <label><input type="checkbox" value="Child trafficking"> Child trafficking</label>
+          <label><input type="checkbox" value="Murder resulting from sexual assault"> Murder resulting from sexual assault</label>
+          <label><input type="checkbox" value="Other"> Other</label>
+        </div>
+      </div>
+
+      <div class="inline-row">
+        <div class="field">
+          <label>Date of Incident <span class="req">*</span></label>
+          <input type="date" id="c-date" />
+          <div class="help">Exact date or approximate (e.g. May 2026)</div>
+        </div>
+        <div class="field">
+          <label>Location of Incident <span class="req">*</span></label>
+          <input type="text" placeholder="District, Upazila, area / address" id="c-location" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Brief Description of Crime <span class="req">*</span></label>
+        <textarea style="min-height:100px" placeholder="What happened? Minimum 2–3 sentences. Include how you know about this case." id="c-desc"></textarea>
+      </div>
+
+      <div class="section-title">Section 4 — Proof &amp; Documentation</div>
+
+      <div class="field">
+        <label>Conviction Status <span class="req">*</span></label>
+        <div class="radio-group">
+          <label><input type="radio" name="conv-status" value="Convicted"> Convicted (court verdict delivered)</label>
+          <label><input type="radio" name="conv-status" value="Arrested"> Arrested (in police custody / jail)</label>
+          <label><input type="radio" name="conv-status" value="Charged"> Charged (case filed, awaiting trial)</label>
+          <label><input type="radio" name="conv-status" value="Accused"> Accused (suspected, not yet arrested)</label>
+          <label><input type="radio" name="conv-status" value="Absconded"> Absconded (suspect at large)</label>
+          <label><input type="radio" name="conv-status" value="Released"> Released (was convicted but released)</label>
+          <label><input type="radio" name="conv-status" value="Outside court settlement"> Outside court settlement</label>
+        </div>
+      </div>
+
+      <div class="inline-row">
+        <div class="field">
+          <label>Court Case Number <span class="opt">— optional</span></label>
+          <input type="text" placeholder="If available — helps verify the case" id="court-num" />
+        </div>
+        <div class="field">
+          <label>Court Verdict Date <span class="opt">— optional</span></label>
+          <input type="date" id="verdict-date" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Sentence / Status <span class="opt">— optional</span></label>
+        <textarea placeholder="e.g. Life imprisonment, death penalty, out on bail, etc." id="sentence"></textarea>
+      </div>
+
+      <div class="field">
+        <label>News Sources (Links) <span class="req">*</span></label>
+        <textarea placeholder="Paste 2 or more full news article URLs (one per line)" id="news-links"></textarea>
+        <div class="help">Provide at least 2 credible news article links about this case.</div>
+      </div>
+
+      <div class="field">
+        <label>Police FIR Number <span class="opt">— optional</span></label>
+        <input type="text" placeholder="First Information Report number" id="fir" />
+      </div>
+
+      <div class="section-title">Section 5 — Current Status</div>
+
+      <div class="inline-row">
+        <div class="field">
+          <label>Current Location of Perpetrator <span class="req">*</span></label>
+          <select id="curr-loc">
+            <option value="">Select</option>
+            <option>In jail / prison</option>
+            <option>Out on bail</option>
+            <option>Absconded / At large</option>
+            <option>Released (sentence completed)</option>
+            <option>Died</option>
+            <option>Unknown</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Case Status <span class="req">*</span></label>
+          <select id="case-ongoing">
+            <option value="">Select</option>
+            <option>Ongoing (trial still proceeding)</option>
+            <option>Closed (verdict delivered)</option>
+            <option>Stalled (no progress for years)</option>
+            <option>Unknown</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Any Appeals Filed? <span class="opt">— optional</span></label>
+        <div class="radio-group">
+          <label><input type="radio" name="appeal" value="Yes, appeal pending"> Yes, appeal pending</label>
+          <label><input type="radio" name="appeal" value="No appeals filed"> No appeals filed</label>
+          <label><input type="radio" name="appeal" value="Appeal rejected"> Appeal rejected</label>
+          <label><input type="radio" name="appeal" value="Unknown"> Unknown</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Additional Notes <span class="opt">— optional</span></label>
+        <textarea placeholder="Any other relevant information, updates, or follow-up information?" id="notes"></textarea>
+      </div>
+
+      <div class="section-title">Section 6 — Submitter Information</div>
+
+      <div class="inline-row">
+        <div class="field">
+          <label>Your Name <span class="opt">— optional</span></label>
+          <input type="text" placeholder="For contact purposes only" id="sub-name" />
+        </div>
+        <div class="field">
+          <label>Your Email <span class="opt">— optional</span></label>
+          <input type="email" placeholder="We may contact you to verify" id="sub-email" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>How Do You Know About This Case? <span class="req">*</span></label>
+        <div class="radio-group">
+          <label><input type="radio" name="knowhow" value="Personal knowledge (family/friend affected)"> Personal knowledge (family / friend affected)</label>
+          <label><input type="radio" name="knowhow" value="News media report"> News media report</label>
+          <label><input type="radio" name="knowhow" value="NGO / Human rights organization"> NGO / Human rights organization</label>
+          <label><input type="radio" name="knowhow" value="Police records"> Police records</label>
+          <label><input type="radio" name="knowhow" value="Court documents"> Court documents</label>
+          <label><input type="radio" name="knowhow" value="Social media"> Social media</label>
+          <label><input type="radio" name="knowhow" value="Other"> Other</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Willing to be Contacted for Verification? <span class="req">*</span></label>
+        <div class="radio-group">
+          <label><input type="radio" name="contact-ok" value="Yes"> Yes, contact me</label>
+          <label><input type="radio" name="contact-ok" value="No"> No, anonymous submission</label>
+        </div>
+        <div class="help">Cases with a contact person willing to comply will be given priority in verification.</div>
+      </div>
+
+      <div class="section-title">Section 7 — Verification &amp; Consent</div>
+
+      <div class="consent-box">
+        <label>
+          <input type="checkbox" id="consent1" />
+          <span>I confirm that the information I have provided is accurate to my knowledge and based on credible sources. I understand this information will be reviewed by NGO partners before publication.</span>
+        </label>
+      </div>
+
+      <div class="consent-box">
+        <label>
+          <input type="checkbox" id="consent2" />
+          <span>I agree that my submission may be shared with verified NGO partners and law enforcement for child protection purposes.</span>
+        </label>
+      </div>
+
+      <button class="btn-submit" onclick="submitForm()">Submit Case Report</button>
+    </div>
+
+    <div id="success-area" style="display:none;">
+      <div class="success-msg">
+        <h3>Submission received</h3>
+        <p>Thank you for your submission. Your information will be reviewed by our partners within 5–7 days.<br>If verified, it will be added to the public database.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== DATABASE PAGE ===================== -->
+<div class="page" id="page-database">
+  <div class="hero">
+    <h1>Public Database of Verified Cases</h1>
+    <p>Cases reviewed and verified by NGO partners. Verified cases (●) show full details. Alleged cases (○) are pending full verification and show limited information.</p>
+  </div>
+
+  <div class="db-wrap">
+    <div class="db-stats">
+      <div class="stat-item"><span class="stat-num">8</span><span class="stat-label">Total cases</span></div>
+      <div class="stat-item"><span class="stat-num">5</span><span class="stat-label">Verified</span></div>
+      <div class="stat-item"><span class="stat-num">3</span><span class="stat-label">Alleged</span></div>
+      <div class="stat-item"><span class="stat-num">4</span><span class="stat-label">Convicted</span></div>
+    </div>
+
+    <div class="tier-legend">
+      <span class="tier-pill green">● Verified</span>
+      <span class="tier-pill yellow">○ Alleged — pending verification</span>
+      <span class="verified-note">Full details shown only for court-verified cases.</span>
+    </div>
+
+    <div class="db-filters">
+      <div class="filter-group">
+        <label>Status</label>
+        <select id="filter-status" onchange="renderCases()">
+          <option value="">All statuses</option>
+          <option>Convicted</option>
+          <option>Arrested</option>
+          <option>Charged</option>
+          <option>Accused</option>
+          <option>Absconded</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Crime type</label>
+        <select id="filter-crime" onchange="renderCases()">
+          <option value="">All crimes</option>
+          <option>Child sexual abuse</option>
+          <option>Rape</option>
+          <option>Gang rape</option>
+          <option>Sexual molestation</option>
+          <option>Child trafficking</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Location</label>
+        <input type="text" id="filter-loc" placeholder="District or area" oninput="renderCases()" />
+      </div>
+      <div class="filter-group">
+        <label>Search name</label>
+        <input type="text" id="filter-name" placeholder="Perpetrator name" oninput="renderCases()" />
+      </div>
+    </div>
+
+    <div class="cases-list" id="cases-list"></div>
+    <div class="no-results" id="no-results" style="display:none;">No cases match your filters.</div>
+  </div>
+</div>
+
+<footer>
+  <span>Report Child Abuse &amp; Sexual Violence Perpetrators — Bangladesh</span>
+  <span>All cases reviewed by NGO partners before publication.</span>
+</footer>
+
+<script>
+const cases = [
+  {
+    tier: 'green', name: 'Mohammad Rafiqul Islam', age: 42,
+    crime: ['Rape', 'Murder resulting from sexual assault'],
+    date: '2024-03-14', location: 'Cumilla District',
+    status: 'Convicted', currentLoc: 'In jail / prison', caseStatus: 'Closed',
+    desc: 'Convicted by the Women and Children Repression Prevention Tribunal for the rape and murder of a 14-year-old girl. Court delivered the death penalty verdict on 14 March 2024.',
+    sources: ['prothomalo.com', 'thedailystar.net'],
+    caseNum: '2023/WCRT/0471', sentence: 'Death penalty', appeal: 'No appeals filed'
+  },
+  {
+    tier: 'green', name: 'Karim Abdul Hussain', age: 38,
+    crime: ['Child sexual abuse', 'Child trafficking'],
+    date: '2023-11-02', location: 'Dhaka — Mirpur',
+    status: 'Convicted', currentLoc: 'In jail / prison', caseStatus: 'Closed',
+    desc: 'Convicted under the Prevention of Child Marriage Act and Women and Children Repression Prevention Act. Ran an organized trafficking ring targeting minors in Mirpur slum areas.',
+    sources: ['bdnews24.com', 'dhakatribune.com'],
+    caseNum: '2023/WCRT/0388', sentence: 'Life imprisonment', appeal: 'Appeal pending'
+  },
+  {
+    tier: 'green', name: 'Rezaul Karim Sumon', age: 55,
+    crime: ['Gang rape'],
+    date: '2022-08-19', location: 'Noakhali District',
+    status: 'Convicted', currentLoc: 'In jail / prison', caseStatus: 'Closed',
+    desc: 'One of seven men convicted in the widely-reported Noakhali gang rape case. Case drew nationwide protests. Sentenced to life imprisonment.',
+    sources: ['thedailystar.net', 'prothomalo.com'],
+    caseNum: '2021/WCRT/0112', sentence: 'Life imprisonment', appeal: 'Appeal rejected'
+  },
+  {
+    tier: 'green', name: 'Alam Hossain Badal', age: 61,
+    crime: ['Child sexual abuse', 'Sexual molestation'],
+    date: '2023-05-30', location: 'Sylhet District',
+    status: 'Convicted', currentLoc: 'In jail / prison', caseStatus: 'Closed',
+    desc: 'Former school teacher convicted for repeated sexual abuse of students over a 3-year period. Sentenced to 10 years imprisonment.',
+    sources: ['sylhetnews.com', 'bdnews24.com'],
+    caseNum: '2022/WCRT/0224', sentence: '10 years imprisonment', appeal: 'No appeals filed'
+  },
+  {
+    tier: 'green', name: 'Shahidul Islam Palash', age: 29,
+    crime: ['Rape', 'Attempted rape'],
+    date: '2024-07-08', location: 'Chattogram — Pahartali',
+    status: 'Arrested', currentLoc: 'In jail / prison', caseStatus: 'Ongoing',
+    desc: 'Arrested on 8 July 2024 following complaints filed by two women. FIR registered at Pahartali Police Station. Trial currently underway at the Women and Children Repression Prevention Tribunal.',
+    sources: ['ctgnews24.com', 'thedailystar.net'],
+    caseNum: '2024/WCRT/0602', sentence: 'Awaiting verdict', appeal: 'Unknown'
+  },
+  {
+    tier: 'yellow', name: 'Name withheld — Alleged', age: null,
+    crime: ['Child sexual abuse'],
+    date: '2024-09-01', location: 'Rajshahi District',
+    status: 'Accused', currentLoc: 'Unknown', caseStatus: 'Unknown',
+    desc: 'Alleged perpetrator reported by an NGO partner. Single source at this time — case under review. Additional documentation requested.',
+    sources: [], caseNum: '', sentence: '', appeal: 'Unknown'
+  },
+  {
+    tier: 'yellow', name: 'Name withheld — Alleged', age: null,
+    crime: ['Sexual molestation'],
+    date: '2023-12-15', location: 'Khulna District',
+    status: 'Charged', currentLoc: 'Out on bail', caseStatus: 'Ongoing',
+    desc: 'Case filed at local court. Media report from one source. Verification in progress with NGO partner.',
+    sources: [], caseNum: '', sentence: '', appeal: 'Unknown'
+  },
+  {
+    tier: 'yellow', name: 'Name withheld — Alleged', age: null,
+    crime: ['Rape'],
+    date: '2024-04-22', location: 'Mymensingh District',
+    status: 'Accused', currentLoc: 'Absconded / At large', caseStatus: 'Unknown',
+    desc: 'Accused reportedly fled the district after allegations surfaced. Case reported by a women\'s rights organization. No court case filed yet.',
+    sources: [], caseNum: '', sentence: '', appeal: 'Unknown'
+  }
+];
+
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'database') renderCases();
+  window.scrollTo(0, 0);
+}
+
+function statusClass(s) {
+  const map = { 'Convicted': 'status-convicted', 'Arrested': 'status-arrested', 'Charged': 'status-charged', 'Accused': 'status-accused', 'Absconded': 'status-absconded' };
+  return map[s] || 'status-accused';
+}
+
+function renderCases() {
+  const fStatus = document.getElementById('filter-status').value.toLowerCase();
+  const fCrime = document.getElementById('filter-crime').value.toLowerCase();
+  const fLoc = document.getElementById('filter-loc').value.toLowerCase();
+  const fName = document.getElementById('filter-name').value.toLowerCase();
+
+  const filtered = cases.filter(c => {
+    if (fStatus && !c.status.toLowerCase().includes(fStatus)) return false;
+    if (fCrime && !c.crime.some(cr => cr.toLowerCase().includes(fCrime))) return false;
+    if (fLoc && !c.location.toLowerCase().includes(fLoc)) return false;
+    if (fName && !c.name.toLowerCase().includes(fName)) return false;
+    return true;
+  });
+
+  const list = document.getElementById('cases-list');
+  const noRes = document.getElementById('no-results');
+
+  if (!filtered.length) {
+    list.innerHTML = '';
+    noRes.style.display = 'block';
+    return;
+  }
+  noRes.style.display = 'none';
+
+  list.innerHTML = filtered.map(c => {
+    const isGreen = c.tier === 'green';
+    const dateStr = c.date ? new Date(c.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+    const metaParts = [c.location, dateStr, c.age ? 'Age: ' + c.age : null, isGreen && c.sentence ? c.sentence : null].filter(Boolean);
+    const crimeTags = c.crime.map(cr => '<span class="tag crime">' + cr + '</span>').join('');
+    const extras = (isGreen && c.caseNum ? '<span class="tag">Case: ' + c.caseNum + '</span>' : '') +
+      (isGreen && c.sources.length ? '<span class="tag">' + c.sources.length + ' source' + (c.sources.length > 1 ? 's' : '') + '</span>' : '');
+
+    return '<div class="case-card">' +
+      '<div class="case-dot ' + c.tier + '" title="' + (isGreen ? 'Verified' : 'Alleged — pending verification') + '"></div>' +
+      '<div>' +
+        '<div class="case-name">' + c.name + '</div>' +
+        '<div class="case-meta">' + metaParts.map(m => '<span>' + m + '</span>').join('') + '</div>' +
+        '<div class="case-desc">' + c.desc + (!isGreen ? ' <em style="color:#999;font-size:12px">(Alleged — pending verification)</em>' : '') + '</div>' +
+        '<div class="case-tags">' + crimeTags + extras + '</div>' +
+      '</div>' +
+      '<div class="case-status"><span class="status-badge ' + statusClass(c.status) + '">' + c.status + '</span></div>' +
+    '</div>';
+  }).join('');
+}
+
+function submitForm() {
+  const errors = [];
+  if (!document.getElementById('v-age').value) errors.push('Victim age at time of incident is required.');
+  if (!document.getElementById('v-gender').value) errors.push('Victim gender is required.');
+  if (!document.getElementById('p-name').value.trim()) errors.push('Full name of accused / convicted person is required.');
+  const crimeChecked = [...document.querySelectorAll('#crime-checks input[type=checkbox]')].some(cb => cb.checked);
+  if (!crimeChecked) errors.push('Please select at least one type of crime.');
+  if (!document.getElementById('c-date').value) errors.push('Date of incident is required.');
+  if (!document.getElementById('c-location').value.trim()) errors.push('Location of incident is required.');
+  if (!document.getElementById('c-desc').value.trim()) errors.push('Brief description of crime is required.');
+  if (!document.querySelector('input[name="conv-status"]:checked')) errors.push('Conviction status is required.');
+  if (!document.getElementById('news-links').value.trim()) errors.push('News source links are required.');
+  if (!document.getElementById('curr-loc').value) errors.push('Current location of perpetrator is required.');
+  if (!document.getElementById('case-ongoing').value) errors.push('Case status (ongoing or closed) is required.');
+  if (!document.querySelector('input[name="knowhow"]:checked')) errors.push('Please indicate how you know about this case.');
+  if (!document.querySelector('input[name="contact-ok"]:checked')) errors.push('Please indicate if you are willing to be contacted.');
+  if (!document.getElementById('consent1').checked) errors.push('Please agree to the accuracy consent statement.');
+  if (!document.getElementById('consent2').checked) errors.push('Please agree to the data privacy consent statement.');
+
+  const banner = document.getElementById('error-banner');
+  if (errors.length) {
+    banner.innerHTML = errors.map(e => '• ' + e).join('<br>');
+    banner.style.display = 'block';
+    banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  banner.style.display = 'none';
+  document.getElementById('form-area').style.display = 'none';
+  document.getElementById('success-area').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+renderCases();
+</script>
+
+</body>
+</html>
